@@ -8,6 +8,14 @@ defmodule Stripe.PaymentMethod do
   use Stripe.Entity
   import Stripe.Request
 
+  @type sepa_debit :: %{
+    bank_code: String.t() | nil,
+    branch_code: String.t() | nil,
+    country: String.t() | nil,
+    fingerprint: String.t() | nil,
+    last4: String.t() | nil,
+  }
+
   @type t :: %__MODULE__{
           id: Stripe.id(),
           object: String.t(),
@@ -18,6 +26,7 @@ defmodule Stripe.PaymentMethod do
             phone: String.t() | nil
           },
           card: Stripe.Card.t() | nil,
+          sepa_debit: sepa_debit() | nil,
           created: Stripe.timestamp(),
           customer: Stripe.id() | Stripe.Customer.t() | nil,
           livemode: boolean,
@@ -30,6 +39,7 @@ defmodule Stripe.PaymentMethod do
     :object,
     :billing_details,
     :card,
+    :sepa_debit,
     :created,
     :customer,
     :livemode,
